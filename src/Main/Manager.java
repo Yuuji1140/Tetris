@@ -25,6 +25,7 @@ public class Manager {
     }
 
     public void draw(Graphics2D g2) {
+        // Draw playground
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(4f));
         g2.drawRect(xLeft - 4, yTop - 4, WIDTH + 8, HEIGHT + 8);
