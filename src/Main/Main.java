@@ -14,5 +14,7 @@ public class Main {
 
         board.setLocationRelativeTo(null);
         board.setVisible(true);
+
+        gp.launch();
     }
 }

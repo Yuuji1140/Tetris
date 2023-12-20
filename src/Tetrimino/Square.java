@@ -1,5 +1,5 @@
 package Tetrimino;
 
-public class Square {
+public class Square extends Tetromino {
     
 }

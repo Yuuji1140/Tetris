@@ -1,5 +1,5 @@
 package Tetrimino;
 
-public class T {
+public class T extends Tetromino {
     
 }
