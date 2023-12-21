@@ -20,8 +20,13 @@ public class L1 extends Tetromino{
         b[3].y = b[0].y + Block.SIZE;
     }
 
+    //  o
+    //  o
+    //  o o
     @Override
     public void getD1() {
+        temp[0].x = b[0].x;
+        temp[0].y = b[0].y;
         temp[1].x = b[0].x;
         temp[1].y = b[0].y - Block.SIZE;
         temp[2].x = b[0].x;
@@ -32,18 +37,52 @@ public class L1 extends Tetromino{
         updateXY(1);
     }
 
+    //  o o o
+    //  o
     @Override
-    public void getD2() {
-        
+    public void getD2() {        
+        temp[0].x = b[0].x;
+        temp[0].y = b[0].y;
+        temp[1].x = b[0].x + Block.SIZE;
+        temp[1].y = b[0].y;
+        temp[2].x = b[0].x - Block.SIZE;
+        temp[2].y = b[0].y;
+        temp[3].x = b[0].x - Block.SIZE;
+        temp[3].y = b[0].y + Block.SIZE;
+
+        updateXY(2);
     }
 
+    //  o o
+    //    o
+    //    o
     @Override
     public void getD3() {
-        
+        temp[0].x = b[0].x;
+        temp[0].y = b[0].y;
+        temp[1].x = b[0].x;
+        temp[1].y = b[0].y + Block.SIZE;
+        temp[2].x = b[0].x;
+        temp[2].y = b[0].y - Block.SIZE;
+        temp[3].x = b[0].x - Block.SIZE;
+        temp[3].y = b[0].y - Block.SIZE;
+
+        updateXY(3);
     }
 
+    //      o
+    //  o o o
     @Override
     public void getD4() {
-        
+        temp[0].x = b[0].x;
+        temp[0].y = b[0].y;
+        temp[1].x = b[0].x - Block.SIZE;
+        temp[1].y = b[0].y;
+        temp[2].x = b[0].x + Block.SIZE;
+        temp[2].y = b[0].y;
+        temp[3].x = b[0].x + Block.SIZE;
+        temp[3].y = b[0].y - Block.SIZE;
+
+        updateXY(4);
     }
 }

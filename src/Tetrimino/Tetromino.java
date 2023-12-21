@@ -37,6 +37,7 @@ public class Tetromino {
         b[3].x = temp[3].x;
         b[3].y = temp[3].y;
     }
+    
     public void getD1() {}
     public void getD2() {}
     public void getD3() {}
@@ -45,8 +46,22 @@ public class Tetromino {
     public void update() {
         // Move Tetromino
         if (Controller.upPressed) {
-            
-        }
+            switch (direction) {
+                case 1:
+                    getD2();
+                    break;
+                case 2:
+                    getD3();
+                    break;
+                case 3:
+                    getD4();
+                    break;
+                case 4:
+                    getD1();
+                    break;
+            }
+            Controller.upPressed = false;
+        }        
         if (Controller.downPressed) {
             b[0].y += Block.SIZE;
             b[1].y += Block.SIZE;

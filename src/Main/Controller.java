@@ -15,9 +15,9 @@ public class Controller implements KeyListener{
 
         if (code == KeyEvent.VK_UP)
             upPressed = true;
-        if (code == KeyEvent.VK_LEFT)
+        if (code == KeyEvent.VK_DOWN)
             downPressed = true;
-        if (code == KeyEvent.VK_DOWN) 
+        if (code == KeyEvent.VK_LEFT) 
             leftPressed = true;
         if (code == KeyEvent.VK_RIGHT) 
             rightPressed = true;
