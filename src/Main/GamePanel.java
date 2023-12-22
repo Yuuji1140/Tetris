@@ -56,7 +56,9 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     private void update() {
-        m.update();
+        if (!Controller.pause) {
+            m.update();
+        }
     }
 
     public void paintComponent(Graphics g) {
