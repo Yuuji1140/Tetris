@@ -48,8 +48,8 @@ public class Manager {
         yTop = 50;
         yBottom = yTop + HEIGHT;
 
-        START_X = xLeft + (WIDTH / 2) - Block.SIZE;
-        START_Y = yTop + Block.SIZE;
+        START_X = xLeft + 4 + (WIDTH / 2) - Block.SIZE;
+        START_Y = yTop + 4 + Block.SIZE;
 
         NEXT_X = xRight + 100;
         NEXT_Y = yTop + 480;
@@ -94,10 +94,11 @@ public class Manager {
 
     public void update() {
         if (!currTetromino.active) {
-            inactive.add(currTetromino.b[0]);
-            inactive.add(currTetromino.b[1]);
-            inactive.add(currTetromino.b[2]);
-            inactive.add(currTetromino.b[3]);
+            for (int i = 0; i < currTetromino.b.length; i++) {
+                currTetromino.b[i].x -= 4;
+                currTetromino.b[i].y -= 4;
+                inactive.add(currTetromino.b[i]);
+            }
 
             currTetromino.deactivating = false;
 
@@ -106,8 +107,46 @@ public class Manager {
 
             nextTetromino = pickTetromino();
             nextTetromino.setXY(NEXT_X, NEXT_Y);
+
+            deleteLine();
         } else
             currTetromino.update();
+    }
+
+    private void deleteLine() {
+        int x = xLeft;
+        int y = yTop;
+        int bc = 0;
+
+        while (x < xRight && y < yBottom) {
+            for (int i = 0; i < inactive.size(); i++) {
+                if (inactive.get(i).x == x && inactive.get(i).y == y) {
+                    bc++;
+                }
+            }
+
+            x += Block.SIZE;
+
+            if (x == xRight) {
+                if (bc == 12) {
+                    for (int i = inactive.size() - 1; i > -1; i--) {
+                        if (inactive.get(i).y == y) {
+                            inactive.remove(i);
+                        }
+                    }
+
+                    for (int i = 0; i < inactive.size(); i++) {
+                        if (inactive.get(i).y < y) {
+                            inactive.get(i).y += Block.SIZE;
+                        }
+                    }
+                }
+
+                bc = 0;
+                x = xLeft;
+                y += Block.SIZE;
+            }
+        }
     }
 
     public void draw(Graphics2D g2) {
