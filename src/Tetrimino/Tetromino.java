@@ -16,6 +16,9 @@ public class Tetromino {
     boolean leftC, rightC, bottomC;
     public boolean active = true;
 
+    public boolean deactivating;
+    int dc = 0;
+
     public void create(Color c) {
         b[0] = new Block(c);
         b[1] = new Block(c);
@@ -129,6 +132,10 @@ public class Tetromino {
     }
 
     public void update() {
+        if (deactivating) {
+            deactivating();
+        }
+
         // Move Tetromino
         if (Controller.upPressed) {
             switch (direction) {
@@ -184,7 +191,7 @@ public class Tetromino {
         }
 
         if (bottomC)
-            active = false;
+            deactivating = true;
         else {
             // Increases every frame
             dropCounter++;
@@ -196,6 +203,20 @@ public class Tetromino {
                 b[2].y += Block.SIZE;
                 b[3].y += Block.SIZE;
                 dropCounter = 0;
+            }
+        }
+    }
+
+    private void deactivating() {
+        dc++;
+
+        // 45 frames wait time
+        if (dc == 45) {
+            dc = 0;
+            movementCollison();
+
+            if (bottomC) {
+                active = false;
             }
         }
     }

@@ -99,6 +99,8 @@ public class Manager {
             inactive.add(currTetromino.b[2]);
             inactive.add(currTetromino.b[3]);
 
+            currTetromino.deactivating = false;
+
             currTetromino = nextTetromino;
             currTetromino.setXY(START_X, START_Y);
 
