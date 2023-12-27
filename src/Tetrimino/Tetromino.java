@@ -9,6 +9,7 @@ import Main.Manager;
 public class Tetromino {
     public Block[] b = new Block[4];
     public Block[] temp = new Block[4];
+    int x, y;
     
     int dropCounter = 0;
     public int direction = 1;
@@ -31,7 +32,18 @@ public class Tetromino {
         temp[3] = new Block(c);
     }
 
-    public void setXY(int x, int y) {}
+    public void setXY(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 
     public void updateXY(int direction) {
         rotationCollision();
@@ -63,7 +75,7 @@ public class Tetromino {
 
         // Left Wall
         for (int i = 0; i < b.length; i++) {
-            if (b[i].x - 4== Manager.xLeft)
+            if (b[i].x - 4 == Manager.xLeft)
                 leftC = true;
         }
 
