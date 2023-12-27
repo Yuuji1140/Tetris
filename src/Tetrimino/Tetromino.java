@@ -144,6 +144,8 @@ public class Tetromino {
     }
 
     public void update() {
+        movementCollison();
+
         if (deactivating) {
             deactivating();
         }
@@ -166,8 +168,6 @@ public class Tetromino {
             }
             Controller.upPressed = false;
         }
-
-        movementCollison();
 
         if (Controller.downPressed) {
             if(!bottomC) {
@@ -226,7 +226,7 @@ public class Tetromino {
         if (dc == 45) {
             dc = 0;
             movementCollison();
-
+            
             if (bottomC) {
                 active = false;
             }

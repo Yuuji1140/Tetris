@@ -33,9 +33,6 @@ public class Manager {
     final int START_X;
     final int START_Y;
 
-    // Tetromino nextTetromino;
-    // final int NEXT_X;
-    // final int NEXT_Y;
     int num;
     public static ArrayList<Tetromino> nextBlocks = new ArrayList<>();
     public static ArrayList<Block> inactive = new ArrayList<>();
@@ -55,9 +52,6 @@ public class Manager {
         START_X = xLeft + 4 + (WIDTH / 2) - Block.SIZE;
         START_Y = yTop + 4 + Block.SIZE;
 
-        // NEXT_X = xRight + 200;
-        // NEXT_Y = yTop + 550;
-
         // Set starting block
         currTetromino = pickTetromino();
         currTetromino.setXY(START_X, START_Y);
@@ -68,9 +62,6 @@ public class Manager {
             nextBlocks.get(i).setXY(xRight + 100, yTop + num);
             num += 120;
         }
-
-        // nextTetromino = pickTetromino();
-        // nextTetromino.setXY(NEXT_X, NEXT_Y);
     }
 
     private Tetromino pickTetromino() {
@@ -130,8 +121,6 @@ public class Manager {
             
             nextBlocks.add(pickTetromino());
             nextBlocks.get(4).setXY(xRight + 100, yTop + num);
-            // nextTetromino = pickTetromino();
-            // nextTetromino.setXY(NEXT_X, NEXT_Y);
 
             deleteLine();
         } else
@@ -180,30 +169,26 @@ public class Manager {
         g2.setStroke(new BasicStroke(4f));
         g2.drawRect(xLeft - 4, yTop - 4, WIDTH + 8, HEIGHT + 8);
 
-        // Draw Next Block Frame
-        // int x = xRight + 50;
-        // int y = yBottom - 200;
-        // g2.drawRect(x, y, 150, 150);
+        // Set Font and Rendering
         g2.setFont(new Font("Arial", Font.BOLD, 25));
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        // g2.drawString("NEXT", x + 40, y + 35);
 
         // Draw currTetromino
         if (currTetromino != null) {
             currTetromino.draw(g2);
         }
 
-        // Draw nextTetromino
-        // nextTetromino.draw(g2);
+        // Draw next blocks
         for (int i = 0; i < nextBlocks.size(); i++) {
             nextBlocks.get(i).draw(g2);
         }
 
+        // Draw placed blocks
         for (int i = 0; i < inactive.size(); i++) {
             inactive.get(i).draw(g2);
         }
 
-        
+        // Notify player of pause or game over
         g2.setFont(g2.getFont().deriveFont(50f));
         int x, y;
         if (endgame) {
