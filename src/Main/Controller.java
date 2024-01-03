@@ -1,10 +1,11 @@
 package Main;
 
+import java.awt.RenderingHints.Key;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Controller implements KeyListener{
-    public static boolean upPressed, downPressed, leftPressed, rightPressed, pause, hardDropPressed;
+    public static boolean upPressed, downPressed, leftPressed, rightPressed, pause, hardDropPressed, shift;
 
     @Override
     public void keyTyped(KeyEvent e) {}
@@ -28,9 +29,17 @@ public class Controller implements KeyListener{
                 pause = true;
         if (code == KeyEvent.VK_SPACE)
             hardDropPressed = true;
+        if (code == KeyEvent.VK_SHIFT) {
+            shift = true;
+        }
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+        int code = e.getKeyCode();
+
+        if (code == KeyEvent.VK_SHIFT)
+            shift = false;
+    }
     
 }

@@ -41,6 +41,11 @@ public class Manager {
     public static int fallInterval = 60;
 
     static boolean endgame;
+
+    private boolean used;
+    private Tetromino hold;
+    final int HOLD_X;
+    final int HOLD_Y;
     
     // Set gameplay frame
     public Manager() {
@@ -51,6 +56,9 @@ public class Manager {
 
         START_X = xLeft + 4 + (WIDTH / 2) - Block.SIZE;
         START_Y = yTop + 4 + Block.SIZE;
+
+        HOLD_X = xLeft - 100;
+        HOLD_Y = yTop + 50;
 
         // Set starting block
         currTetromino = pickTetromino();
@@ -109,7 +117,7 @@ public class Manager {
             currTetromino.deactivating = false;
             
             currTetromino = nextBlocks.get(0);
-            currTetromino.setXY(START_X, START_Y);;
+            currTetromino.setXY(START_X, START_Y);
 
             nextBlocks.remove(0);
             num = 50;
@@ -131,6 +139,39 @@ public class Manager {
                 currTetromino.hardDrop();
                 Controller.hardDropPressed = false;
             }
+
+            if (Controller.shift && !used) {
+                holdMino();
+                used = true;
+            }
+
+            if (!Controller.shift)
+                used = false;
+    }
+
+    private void holdMino() {
+        if (hold == null) {
+            hold = currTetromino;
+            hold.setXY(HOLD_X, HOLD_Y);
+            currTetromino = nextBlocks.get(0);
+            currTetromino.setXY(START_X, START_Y);
+
+            nextBlocks.remove(0);
+            num = 50;
+            for (int i = 0; i < nextBlocks.size(); i++) {
+                nextBlocks.get(i).setXY(xRight + 100, yTop + num);
+                num += 120;
+            }
+            
+            nextBlocks.add(pickTetromino());
+            nextBlocks.get(4).setXY(xRight + 100, yTop + num);
+        } else {
+            Tetromino temp = hold;
+            hold = currTetromino;
+            hold.setXY(HOLD_X, HOLD_Y);
+            currTetromino = temp;
+            currTetromino.setXY(START_X, START_Y);
+        }
     }
 
     private void deleteLine() {
@@ -192,6 +233,11 @@ public class Manager {
         // Draw placed blocks
         for (int i = 0; i < inactive.size(); i++) {
             inactive.get(i).draw(g2);
+        }
+
+        // Draw held block
+        if (hold != null) {
+            hold.draw(g2);
         }
 
         // Notify player of pause or game over

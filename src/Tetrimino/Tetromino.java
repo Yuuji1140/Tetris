@@ -74,21 +74,32 @@ public class Tetromino {
         inactiveCollision();
 
         // Left Wall
-        for (int i = 0; i < b.length; i++) {
+        for (int i = 0; i < b.length; i++) 
             if (b[i].x - 4 == Manager.xLeft)
                 leftC = true;
-        }
 
-        // Right
-        for (int i = 0; i < b.length; i++) {
+        // Right Wall
+        for (int i = 0; i < b.length; i++) 
             if (b[i].x + Block.SIZE - 4 == Manager.xRight)
                 rightC = true;
-        }
 
-        // Bottom
-        for (int i = 0; i < b.length; i++) {
+        // Bottom Wall
+        for (int i = 0; i < b.length; i++) 
             if (b[i].y + Block.SIZE - 4 == Manager.yBottom)
                 bottomC = true;
+
+        for (int i = 0; i < Manager.inactive.size(); i++)
+            for (int j = 0; j < b.length; j++) {
+                int targetX = Manager.inactive.get(i).x + 4;
+                int targetY = Manager.inactive.get(i).y + 4;
+            
+                // Check left
+                if (b[j].x - Block.SIZE == targetX && b[j].y == targetY)
+                    leftC = true;
+            
+                // Check right
+                if (b[j].x + Block.SIZE == targetX && b[j].y == targetY)
+                    rightC = true;
         }
     }
 
@@ -100,22 +111,19 @@ public class Tetromino {
         inactiveCollision();
 
         // Left Wall
-        for (int i = 0; i < b.length; i++) {
+        for (int i = 0; i < b.length; i++) 
             if (temp[i].x - 4 < Manager.xLeft)
                 leftC = true;
-        }
 
         // Right
-        for (int i = 0; i < b.length; i++) {
+        for (int i = 0; i < b.length; i++) 
             if (temp[i].x + Block.SIZE - 4 > Manager.xRight)
                 rightC = true;
-        }
 
         // Bottom
-        for (int i = 0; i < b.length; i++) {
+        for (int i = 0; i < b.length; i++)
             if (temp[i].y + Block.SIZE - 4 > Manager.yBottom)
                 bottomC = true;
-        }
     }
 
     public void inactiveCollision() {
@@ -124,22 +132,19 @@ public class Tetromino {
             int targetY = Manager.inactive.get(i).y + 4;
 
             // Check bottom
-            for (int j = 0; j < b.length; j++) {
+            for (int j = 0; j < b.length; j++)
                 if(b[j].x == targetX && b[j].y + Block.SIZE == targetY)
                     bottomC = true;
-            }
 
             // Check left
-            for (int j = 0; j < b.length; j++) {
-                if(b[j].x == targetX && b[j].y + Block.SIZE == targetY)
+            for (int j = 0; j < b.length; j++)
+                if(b[j].x == targetX && b[j].y == targetY)
                     leftC = true;
-            }
 
             // Check right
-            for (int j = 0; j < b.length; j++) {
-                if(b[j].x == targetX && b[j].y + Block.SIZE == targetY)
+            for (int j = 0; j < b.length; j++)
+                if(b[j].x == targetX + Block.SIZE && b[j].y == targetY)
                     rightC = true;
-            }
         }
     }
 
