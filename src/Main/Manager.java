@@ -125,6 +125,12 @@ public class Manager {
             deleteLine();
         } else
             currTetromino.update();
+
+            // Handle hard drop
+            if (Controller.hardDropPressed) {
+                currTetromino.hardDrop();
+                Controller.hardDropPressed = false;
+            }
     }
 
     private void deleteLine() {
