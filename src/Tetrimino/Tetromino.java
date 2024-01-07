@@ -37,14 +37,6 @@ public class Tetromino {
         this.y = y;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
     public void updateXY(int direction) {
         rotationCollision();
         
@@ -151,9 +143,8 @@ public class Tetromino {
     public void update() {
         movementCollison();
 
-        if (deactivating) {
+        if (deactivating)
             deactivating();
-        }
 
         // Move Tetromino
         if (Controller.upPressed) {
@@ -239,7 +230,7 @@ public class Tetromino {
             movementCollison();
         }
 
-        deactivating = true;
+        active = false;
     }
 
     private void deactivating() {
@@ -250,9 +241,8 @@ public class Tetromino {
             dc = 0;
             movementCollison();
             
-            if (bottomC) {
+            if (bottomC)
                 active = false;
-            }
         }
     }
 

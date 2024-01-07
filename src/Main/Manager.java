@@ -42,10 +42,16 @@ public class Manager {
 
     static boolean endgame;
 
+    // Holding
     private boolean used;
     private Tetromino hold;
     final int HOLD_X;
     final int HOLD_Y;
+
+    // Score and level
+    int level = 1;
+    int lines;
+    int score;
     
     // Set gameplay frame
     public Manager() {
@@ -57,7 +63,7 @@ public class Manager {
         START_X = xLeft + 4 + (WIDTH / 2) - Block.SIZE;
         START_Y = yTop + 4 + Block.SIZE;
 
-        HOLD_X = xLeft - 100;
+        HOLD_X = xLeft - 125;
         HOLD_Y = yTop + 50;
 
         // Set starting block
@@ -178,6 +184,8 @@ public class Manager {
         int x = xLeft;
         int y = yTop;
         int bc = 0;
+        int lc = 0;
+        int increment = 10;
 
         while (x < xRight && y < yBottom) {
             for (int i = 0; i < inactive.size(); i++) {
@@ -196,6 +204,19 @@ public class Manager {
                         }
                     }
 
+                    lc++;
+                    lines++;
+
+                    if (lines % increment == 0 && fallInterval > 1) {
+                        level++;
+                        increment += 10;
+
+                        if (fallInterval > 10)
+                            fallInterval -= 5;
+                        else
+                            fallInterval -= 1;
+                    }
+
                     for (int i = 0; i < inactive.size(); i++) {
                         if (inactive.get(i).y < y) {
                             inactive.get(i).y += Block.SIZE;
@@ -208,9 +229,22 @@ public class Manager {
                 y += Block.SIZE;
             }
         }
+
+        // Score calculations
+        if (lc == 1) {
+            score += 40 * level;
+        } else if (lc == 2) {
+            score += 100 * level;
+        } else if (lc == 3) {
+            score += 300 * level;
+        } else if (lc == 4) {
+            score += 1200 * level;
+        }
     }
 
     public void draw(Graphics2D g2) {
+        int x, y;
+
         // Draw playground
         g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(4f));
@@ -219,6 +253,13 @@ public class Manager {
         // Set Font and Rendering
         g2.setFont(new Font("Arial", Font.BOLD, 25));
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+        // Draw scoring frame
+        y = yBottom - 220;
+        g2.drawRect(xLeft - 300, y, 250, 220);
+        g2.drawString("Level: " + level, xLeft - 260, y + 60);
+        g2.drawString("Lines: " + lines, xLeft - 260, y + 120);
+        g2.drawString("Score: " + String.format("%06d", score), xLeft - 260, y + 180);
 
         // Draw currTetromino
         if (currTetromino != null) {
@@ -242,7 +283,6 @@ public class Manager {
 
         // Notify player of pause or game over
         g2.setFont(g2.getFont().deriveFont(50f));
-        int x, y;
         if (endgame) {
             // Draw game over
             g2.setColor(Color.yellow);
