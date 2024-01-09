@@ -174,6 +174,8 @@ public class Tetromino {
 
                 // Reset counter when moved downward
                 dropCounter = 0;
+
+                Manager.score += 1;
             }
             Controller.downPressed = false;
         }
@@ -221,6 +223,7 @@ public class Tetromino {
     }
 
     public void hardDrop() {
+        int linesDropped = 0;
         while (!bottomC) {
             b[0].y += Block.SIZE;
             b[1].y += Block.SIZE;
@@ -228,8 +231,10 @@ public class Tetromino {
             b[3].y += Block.SIZE;
 
             movementCollison();
+            linesDropped++;
         }
 
+        Manager.score += 2 * linesDropped;
         active = false;
     }
 

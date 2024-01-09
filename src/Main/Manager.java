@@ -45,13 +45,14 @@ public class Manager {
     // Holding
     private boolean used;
     private Tetromino hold;
+    private boolean swap = false;
     final int HOLD_X;
     final int HOLD_Y;
 
     // Score and level
     int level = 1;
     int lines;
-    int score;
+    public static int score;
     
     // Set gameplay frame
     public Manager() {
@@ -136,6 +137,8 @@ public class Manager {
             nextBlocks.add(pickTetromino());
             nextBlocks.get(4).setXY(xRight + 100, yTop + num);
 
+            swap = false;
+
             deleteLine();
         } else
             currTetromino.update();
@@ -171,12 +174,13 @@ public class Manager {
             
             nextBlocks.add(pickTetromino());
             nextBlocks.get(4).setXY(xRight + 100, yTop + num);
-        } else {
+        } else if (!swap) {
             Tetromino temp = hold;
             hold = currTetromino;
             hold.setXY(HOLD_X, HOLD_Y);
             currTetromino = temp;
             currTetromino.setXY(START_X, START_Y);
+            swap = true;
         }
     }
 
